@@ -1,7 +1,7 @@
 {
   "name": "r2token",
   "description": "",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Selçuk Fatih Sevinç",
   "license": "MIT",
   "engines": {
@@ -23,6 +23,7 @@
     "r2mongoose": "^1.0.5",
     "r2plugin": "^1.0.1",
     "r2query": "^1.0.14",
+    "r2system": "^1.0.9",
     "supertest": "^3.0.0"
   },
   "main": "index.js",

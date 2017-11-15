@@ -2,6 +2,7 @@ const chai = require('chai');
 const r2base = require('r2base');
 const r2mongoose = require('r2mongoose');
 const r2query = require('r2query');
+const r2system = require('r2system');
 const r2plugin = require('r2plugin');
 const r2token = require('../index');
 
@@ -12,6 +13,7 @@ const app = r2base();
 app.start()
   .serve(r2mongoose, { database: 'r2test' })
   .serve(r2query)
+  .serve(r2system)
   .serve(r2plugin)
   .serve(r2token, { secret: '1234' })
   .into(app);

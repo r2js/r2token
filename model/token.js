@@ -1,6 +1,7 @@
 module.exports = (app) => {
   const mongoose = app.service('Mongoose');
   const Plugin = app.service('Plugin');
+  const { Validate } = app.service('System');
   const { Schema } = mongoose;
   const { Mixed } = mongoose.Schema.Types;
 
@@ -14,8 +15,9 @@ module.exports = (app) => {
 
   Plugin.plugins(schema);
 
-  // { owner, attributes, rules, adminSearch, apiSearch }
   schema.r2options = app.service('model/_options/token') || {};
+  const { attributes, rules } = schema.r2options;
+  Validate(schema, { attributes, rules });
 
   return mongoose.model('token', schema);
 };
