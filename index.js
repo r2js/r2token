@@ -14,7 +14,7 @@ module.exports = function Token(app, conf) {
 
   return {
     create(data = {}) {
-      const { email, type = 'login' } = data;
+      const { email = '', type = 'login' } = data;
       const { token } = getToken({ email, type }, secret);
       const saveObj = { email, type, token };
       return mToken.findOrCreate(
@@ -23,7 +23,6 @@ module.exports = function Token(app, conf) {
     },
 
     check(token, type = 'login') {
-      let tokenData;
       return mToken.findOneOrError({ token })
         .then((data) => {
           const decoded = decodeToken(data.token, secret);
@@ -31,10 +30,8 @@ module.exports = function Token(app, conf) {
             return Promise.reject('wrong token type!');
           }
 
-          tokenData = data;
-          return this.remove(data.token);
-        })
-        .then(() => tokenData);
+          return data;
+        });
     },
 
     remove(tokenStr) {
