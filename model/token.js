@@ -13,5 +13,9 @@ module.exports = (app) => {
   });
 
   Plugin.plugins(schema);
+
+  // { owner, attributes, rules, adminSearch, apiSearch }
+  schema.r2options = app.service('model/_options/token') || {};
+
   return mongoose.model('token', schema);
 };
