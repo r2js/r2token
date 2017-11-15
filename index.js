@@ -14,7 +14,7 @@ module.exports = function Token(app, conf) {
 
   return {
     create(data = {}) {
-      const { email = 'test@r2js.org', type = 'login' } = data;
+      const { email, type = 'login' } = data;
       const { token } = getToken({ email, type }, secret);
       const saveObj = { email, type, token };
       return mToken.findOrCreate(
