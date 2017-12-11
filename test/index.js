@@ -94,4 +94,31 @@ describe('r2token', () => {
         done();
       });
   });
+
+  it('should create token via different type', (done) => {
+    Token.create({ email: 'test4@app.com', name: 'Test 4', slug: 'test4', type: 'create-team' })
+      .then((tokenData) => {
+        const { email, type, token, data } = tokenData.doc;
+        expect(email).to.equal('test4@app.com');
+        expect(type).to.equal('create-team');
+        expect(token).to.not.equal(undefined);
+        expect(data).to.deep.equal({ slug: 'test4', name: 'Test 4' });
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should check token via different type', (done) => {
+    Token.create({ email: 'test5@app.com', name: 'Test 5', slug: 'test5', type: 'create-team' })
+      .then(data => Token.check(data.doc.token, 'create-team'))
+      .then((tokenData) => {
+        const { email, type, token, data } = tokenData;
+        expect(email).to.equal('test5@app.com');
+        expect(type).to.equal('create-team');
+        expect(token).to.not.equal(undefined);
+        expect(data).to.deep.equal({ slug: 'test5', name: 'Test 5' });
+        done();
+      })
+      .catch(done);
+  });
 });

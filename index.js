@@ -15,10 +15,12 @@ module.exports = function Token(app, conf) {
   return {
     create(data = {}) {
       const { email = '', type = 'login' } = data;
-      const { token } = getToken({ email, type }, secret);
+      const getData = Object.assign(data, { email, type });
+      const { token } = getToken(getData, secret);
       const saveObj = { email, type, token };
+
       return mToken.findOrCreate(
-        saveObj, Object.assign({}, saveObj, { data: _.omit(data, 'email', 'type') })
+        saveObj, Object.assign({}, saveObj, { data: _.omit(getData, 'email', 'type') })
       );
     },
 
